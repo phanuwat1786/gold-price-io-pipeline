@@ -10,7 +10,7 @@ gold_price_asset = Asset(name = 'gold_price',uri = 'x-market-price://gold')
 with DAG(
     dag_id = 'get_gold_price',
     start_date = pendulum.parse('2026-05-03',tz = 'Asia/Bangkok'),
-    schedule = None,
+    schedule = '@hourly',
 ) as dag :
     
     logger = logging.getLogger(__name__)
