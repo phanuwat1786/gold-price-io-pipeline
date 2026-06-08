@@ -17,8 +17,7 @@ with DAG(
 
     @task
     def reset_key_at_month_start():
-        ct = get_current_context()
-        ti = ct[ti]
+        ti = get_current_context()['ti']
         if  pendulum.instance(ti.start_date).day == 1 :
             Variable.set(key = 'current_gold_api_index',value = '1')
 
