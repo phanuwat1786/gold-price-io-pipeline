@@ -17,15 +17,16 @@ with DAG(
 
     @task
     def reset_key_at_month_start():
-        
-        if pendulum.now().day == 1 :
-            Variable.set(key = 'current_gold_api_index',value = 1)
+        ct = get_current_context()
+        ti = ct[ti]
+        if  pendulum.instance(ti.start_date).day == 1 :
+            Variable.set(key = 'current_gold_api_index',value = '1')
 
     @task()
     def get_gold_price_from_api():
         
         http_hook = HttpHook(method= 'GET', http_conn_id= 'gold-price-io-api')
-        token_number = int(Variable.get("current_gold_api_index",default = 1))
+        token_number = int(Variable.get("current_gold_api_index",default = '1'))
 
         while True:
             header = {
